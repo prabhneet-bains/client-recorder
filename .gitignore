@@ -1,0 +1,15 @@
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+.venv/
+
+# Local env files
+.env
+
+# Persistent recordings
+recordings/
+
+# IDE/project files
+.vscode/

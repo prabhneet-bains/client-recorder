@@ -9,11 +9,32 @@ from scipy.io import wavfile
 import numpy as np
 import requests
 
+
+def load_env_file(path='.env'):
+    if not os.path.exists(path):
+        return
+    with open(path, 'r', encoding='utf-8') as env_file:
+        for line in env_file:
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+            if '=' not in line:
+                continue
+            key, value = line.split('=', 1)
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+            if key and key not in os.environ:
+                os.environ[key] = value
+
+load_env_file()
+
 # ==========================================
 # CONFIGURATION
 # ==========================================
-PUBLIC_SERVER_URL = "https://impulse-perfume-afterlife.ngrok-free.dev" # Your Ngrok/Cloudflare URL
-API_KEY = "jskjdbcskdcs987345873468"
+PUBLIC_SERVER_URL = os.getenv('BACKEND_URL')
+API_KEY = os.getenv('API_KEY')
+if not PUBLIC_SERVER_URL or not API_KEY:
+    raise RuntimeError('BACKEND_URL and API_KEY must be set in environment or in a .env file')
 
 APPEND_URL = f"{PUBLIC_SERVER_URL}/append_chunk"
 FINALIZE_URL = f"{PUBLIC_SERVER_URL}/finalize_session"

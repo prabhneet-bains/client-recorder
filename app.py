@@ -2,8 +2,30 @@ import os
 from flask import Flask, request, Response
 import requests
 
-PUBLIC_SERVER_URL = os.getenv('BACKEND_URL', 'https://impulse-perfume-afterlife.ngrok-free.dev')
-API_KEY = os.getenv('API_KEY', 'jskjdbcskdcs987345873468')
+
+def load_env_file(path='.env'):
+    if not os.path.exists(path):
+        return
+    with open(path, 'r', encoding='utf-8') as env_file:
+        for line in env_file:
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+            if '=' not in line:
+                continue
+            key, value = line.split('=', 1)
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+            if key and key not in os.environ:
+                os.environ[key] = value
+
+load_env_file()
+
+PUBLIC_SERVER_URL = os.getenv('BACKEND_URL')
+API_KEY = os.getenv('API_KEY')
+if not PUBLIC_SERVER_URL or not API_KEY:
+    raise RuntimeError('BACKEND_URL and API_KEY must be set in environment or in a .env file')
+
 HEADERS = {'X-API-KEY': API_KEY}
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')

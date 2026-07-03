@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physio Scribe Web Recorder</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Physio Scribe</p>
+        <h1>Host a free web recorder for clinical sessions</h1>
+        <p class="subtitle">Record audio from your browser, stream chunks to your GPU server, and finalize SOAP notes with a polished UI.</p>
+      </div>
+    </header>
+
+    <main class="card-grid">
+      <section class="card card-panel">
+        <h2>Session control</h2>
+        <div class="button-row">
+          <button id="startBtn" class="primary">Start session</button>
+          <button id="stopBtn" class="secondary" disabled>Stop session</button>
+          <button id="finalizeBtn" class="accent" disabled>Finalize notes</button>
+        </div>
+        <div class="status-card">
+          <p><strong>Session ID</strong>: <span id="sessionId">—</span></p>
+          <p><strong>Chunks uploaded</strong>: <span id="chunkCount">0</span></p>
+          <p><strong>Status</strong>: <span id="statusText">Idle</span></p>
+        </div>
+      </section>
+
+      <section class="card card-panel">
+        <h2>Results</h2>
+        <div class="result-box">
+          <h3>Transcript</h3>
+          <pre id="transcript">No transcript yet.</pre>
+        </div>
+        <div class="result-box">
+          <h3>SOAP Notes</h3>
+          <pre id="notes">No notes yet.</pre>
+        </div>
+        <a id="downloadJson" class="download-link hidden" download="soap_notes.json">Download response JSON</a>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
